@@ -1,0 +1,42 @@
+%%[
+var @FechaInicio, @HoraInicio
+
+set @FechaInicio = "07/17/2023"
+set @HoraInicio = "07/17/2023 8:00 am"
+]%%
+%%[if RequestParameter("submitted") == true then]%%
+%%[
+set @fechaEntrega = RequestParameter("fechaentrega")
+set @diasRestantes = 4
+]%%
+<h1>¡Genial!¡El cambio de fecha de entrega de tu pedido, se ha completado correctamente! </h1>
+<h1>Tick Tock, Tick Tock... ¡Ya solo quedan %%=v(@diasRestantes)=%% días! </h1>
+%%[else]%%
+
+<h1>Cambio de fecha de entrega</h1><p>
+ Aqu&iacute; puedes seleccionar una nueva fecha de entrega para tu pedido.</p><p>
+ Ten en cuenta que no se pueden realizar cambios de fecha de entrega m&aacute;s all&aacute; de 15 d&iacute;as a partir de la fecha de entrega actualmente programada. Si deseas programar una entrega posterior, por favor cont&aacute;ctanos para obtener m&aacute;s informaci&oacute;n.</p>
+<label for="fechaentrega">Fecha de entrega:</label>
+<select name="fechaentrega" id="fechaentrega" form="entrega">
+%%[FOR @i = 0 TO 15 do
+set @dateOption = @FechaInicio
+]%%
+ <option value="%%=v(@dateOption)=%%">%%=v(@dateOption)=%%</option>
+%%[NEXT]%%
+</select>
+<br><br>
+
+<label for="horaentrega">Hora de entrega:</label>
+<select name="horaentrega" id="horaentrega" form="entrega">
+%%[FOR @i = 0 TO 24 do
+set @hourOption = @HoraInicio
+]%%
+  <option value="%%=v(@hourOption)=%%">%%=v(@hourOption)=%%</option>
+%%[NEXT]%%
+</select>
+<br><br>
+<form action="/MCDchangeDeliveryDate" id="entrega">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation"><tr><td align="center"><table border="0" cellspacing="0" cellpadding="0" role="presentation"><tr><td class="innertd buttonblock" bgcolor="#AE7F50" style=" border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; background-color: #AE7F50;"><button type="submit" target="_blank" class="buttonstyles" style=" font-size: 16px; font-family: Arial, Helvetica, sans-serif; color: #FFFFFF; text-align: center; text-decoration: none; display: block; background-color: #AE7F50; border: 1px solid #AE7F50; padding: 10px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" "="">Cambiar fecha de entrega</button></td></tr></table></td></tr></table>
+<input name="submitted" type="hidden" value="true">
+</form>
+%%[ endif ]%%
